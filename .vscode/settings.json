@@ -1,0 +1,106 @@
+{
+  // ******第一部分：Eslint的配置******
+  "eslint.validate": [
+    "typescript",
+    "typescriptreact",
+    "javascript",
+    "javascriptreact",
+    "vue"
+  ],
+  // vscode默认启用了根据文件类型自动设置tabsize的选项
+  "editor.detectIndentation": false,
+  // 重新设定tabsize
+  "editor.tabSize": 2,
+  "files.insertFinalNewline": true, // 文件的最后一行空一行
+  "javascript.format.insertSpaceBeforeFunctionParenthesis": true,
+  "prettier.semi": false,
+  "prettier.singleQuote": true,
+  "vetur.format.enable": true,
+  "vetur.validation.template": false,
+  "workbench.settings.editor": "json",
+  "terminal.integrated.rendererType": "dom",
+  "[css]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "[markdown]": {
+    "editor.defaultFormatter": "fcrespo82.markdown-table-formatter"
+  },
+  "[less]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "dweber019.vscode-style-formatter"
+  },
+  // "javascript.updateImportsOnFileMove.enabled": "always",
+  "typescript.updateImportsOnFileMove.enabled": "always",
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "vetur.format.options.tabSize": 2,
+
+  "vetur.format.defaultFormatter.html": "js-beautify-html",
+
+  "[javascript]": {
+    "editor.defaultFormatter": "vscode.typescript-language-features"
+  },
+
+  "[html]": {
+    "editor.defaultFormatter": "HookyQR.beautify"
+  },
+
+  "[json]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  }, // 函数注释
+
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  "files.associations": {
+    "*.json": "jsonc",
+    "*.cjson": "jsonc",
+    "*.wxss": "css",
+    "*.wxs": "javascript",
+    "*.ts": "typescript"
+  },
+  "emmet.includeLanguages": {
+    "wxml": "html"
+  },
+  "minapp-vscode.disableAutoConfig": true,
+  "window.zoomLevel": 0.4,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "editor.largeFileOptimizations": false,
+  "search.followSymlinks": false,
+  "javascript.format.insertSpaceAfterConstructor": true,
+  "javascript.suggest.completeFunctionCalls": true,
+  "files.autoSave": "afterDelay",
+  "editor.formatOnPaste": true,
+
+  "editor.snippetSuggestions": "bottom",
+  "editor.suggest.snippetsPreventQuickSuggestions": false,
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/node_modules/*/**": true
+  },
+  "sqltools.connections": [
+    {
+      "mysqlOptions": {
+        "authProtocol": "default"
+      },
+      "previewLimit": 50,
+      "server": "123.56.192.23",
+      "port": 3306,
+      "driver": "MySQL",
+      "name": "online",
+      "username": "root",
+      "password": "981220Zy+++",
+      "database": "db_instagram;"
+    }
+  ]
+}

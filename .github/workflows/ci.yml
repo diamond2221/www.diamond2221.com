@@ -1,0 +1,45 @@
+name:
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+    # 此处每一个name对应着一个Action，具体执行逻辑已被提供者进行封装，暴露给用户的只是需要用户需要关心和配置的
+    # 从master上获取最新代码
+    - name: Checkout Github Action
+      uses: actions/checkout@master
+
+    - name: Install
+      run: sudo npm install
+
+    - name: Build
+      run: npm run build
+
+    # 部署
+    - name: Deploy with Scp
+      uses: garygrossgarten/github-action-scp@release
+      with:
+          local: /home/runner/work/www.diamond2221.com/www.diamond2221.com/build
+          remote: ${{ secrets.REMOTE }}
+          # 涉及偏安全隐私的信息，不要明文暴露在此文件中，因为repo很可能是公开的，会被所有人看见
+          # ${{ ... }} 会应用你在对应项目设置中，配置的对应serets的键值信息，从而保护私密信息不被看到
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          password: ${{ secrets.PASSWORD }}
+          concurrency: 20
+
+    - name: Setup Ossutil
+      uses: manyuanrong/setup-ossutil@v1.0
+      with:
+        # endpoint 可以去oss控制台上查看
+        endpoint: "oss-cn-beijing.aliyuncs.com"
+        # 使用我们之前配置在secrets里面的accesskeys来配置ossutil
+        access-key-id: ${{ secrets.ACCESS_KEY_ID }}
+        access-key-secret: ${{ secrets.ACCESS_KEY_SECRET }}
+
+    - name: Deploy To OSS
+      run: ossutil cp -rf /home/runner/work/www.diamond2221.com/www.diamond2221.com/build ${{secrets.OSS_PATH}}
