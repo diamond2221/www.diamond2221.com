@@ -1,23 +1,17 @@
-import { request } from '../request'
+import { RowsData } from '@/types/common'
+import { IOtherUser, IOwnUser, IUpdateUserInfo, IUserInfo } from '@/types/user'
 import {
-  userInfo_get,
-  changeInfo_put,
-  focusUser_post,
-  fans_get,
+  changeInfo_put, fans_get,
   focusUsers_get,
-  focusUser_delete,
-  searchUser_get,
-  userPhoneVerify_post,
-  userPhoneSms_post,
-  userPhoneUpdate_post,
-  recommendUser_get,
+  focusUser_delete, focusUser_post, recommendUser_get, searchUser_get, userInfo_get, userPhoneSms_post,
+  userPhoneUpdate_post, userPhoneVerify_post
 } from '../../config/urls'
+import { request } from '../request'
 
-import { IUpdateUserInfo } from '../../types/user'
 
 // 获取用户信息
 export const getUserInfo = (type: number, label: string) =>
-  request({
+  request<IOwnUser | string>({
     url: userInfo_get,
     method: 'GET',
     params: { type, label },
@@ -61,7 +55,7 @@ export const getFocusUsers = (page: number, size: number) =>
 
 // 搜索用户
 export const searchUsers = (name: string) =>
-  request({ url: searchUser_get, method: 'GET', params: { name } })
+  request<IUserInfo[]>({ url: searchUser_get, method: 'GET', params: { name } })
 
 export const verifyPhoneNumber = (phoneNumber: string) => {
   return request({
@@ -90,7 +84,7 @@ export const userPhoneUpdate = (phoneNumber: string, verifyCode: string) => {
 }
 
 export const fetchRecommendUser = (page: number, size: number) => {
-  return request({
+  return request<RowsData<IOtherUser[]>>({
     method: 'get',
     url: recommendUser_get,
     params: {

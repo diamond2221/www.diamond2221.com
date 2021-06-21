@@ -32,7 +32,7 @@ export const RegisterWrapper = styled.div`
                 padding: 15px 0px;
             }
             .ant-form-item {
-                margin-bottom: 5px;
+                margin-bottom: 10px;
             }
             .ant-form-explain {
                 transition: all 300ms;

@@ -1,17 +1,24 @@
 import React, { Component } from 'react'
 import DefaultLayout from '@/layouts/Layout'
 import './App.less'
-import { RouteComponentProps, withRouter } from 'react-router'
+import { RouteComponentProps } from 'react-router'
+import { inject, observer } from 'mobx-react'
+import { AccountStore } from './store/account'
 
-export interface AppProps extends RouteComponentProps {}
+export interface AppProps extends RouteComponentProps {
+  accountStore: AccountStore
+}
 export class App extends Component<Readonly<AppProps>> {
   render() {
     return (
-      <div className='App'>
-        <DefaultLayout {...this.props}></DefaultLayout>
+      <div className="App">
+        <DefaultLayout
+          {...this.props}
+          accountStore={this.props.accountStore}
+        ></DefaultLayout>
       </div>
     )
   }
 }
 
-export default withRouter(App as any)
+export default inject('accountStore')(observer(App)) as any

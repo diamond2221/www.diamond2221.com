@@ -10,8 +10,11 @@ import { IUserInfo } from '@/types/index'
 import * as Rx from 'rxjs'
 import * as operators from 'rxjs/operators'
 import { useEffect } from 'react'
+import {inject, observer} from 'mobx-react'
+import { AppStore } from '@/store/app'
+import { setUser } from '@/utils/common'
+import { AccountStore } from '@/store/account'
 
-const beian = '晋ICP备19002402号-3'
 const rules = {
   username: [
     {
@@ -26,7 +29,6 @@ const rules = {
     },
   ],
 }
-const fromPath = ''
 
 const loginSubject = new Rx.BehaviorSubject(null as null | ILoginParams)
 const loginResultObservable = loginSubject.pipe(
@@ -41,7 +43,9 @@ const loginResultObservable = loginSubject.pipe(
   // })
 )
 
-function Login(props: RouteComponentProps) {
+function Login(
+  props: RouteComponentProps & { appStore: AppStore; accountStore : AccountStore}
+) {
   let [loginParams, setLoginParams] = useState<null | ILoginParams>(null)
 
   const [error, setError] = useState<null | string>(null)
@@ -58,16 +62,15 @@ function Login(props: RouteComponentProps) {
     const loginSubscription = loginResultObservable.subscribe((result) => {
       if (typeof result.data !== 'string') {
         const userInfo: IUserInfo = { ...result.data }
-        // sessionStorage.setItem("userInfo", JSON.stringify(userInfo))
-        // setUser({ userId: userInfo.userId, token: userInfo.token })
-        // const { fromPath } = this.props
-        // this.props.updateFromPath('')
+        setUser({ userId: userInfo.userId, token: userInfo.token })
+        const { fromPath } = props.appStore
+        props.appStore.updateFromPath('')
         setTimeout(() => {
           props.history.replace({
             pathname: fromPath ? fromPath : '/',
           })
         }, 200)
-        // this.props.login(userInfo)
+        props.accountStore.Login(userInfo)
       } else {
         notification.error({
           message: result,
@@ -78,6 +81,7 @@ function Login(props: RouteComponentProps) {
     return () => {
       loginSubscription.unsubscribe()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginParams])
 
   return (
@@ -124,11 +128,11 @@ function Login(props: RouteComponentProps) {
       </Card>
       <Card>
         <p>
-          <Button type="link">{beian}</Button>
+          <Button type="link">{props.appStore.beian}</Button>
         </p>
       </Card>
     </LoginPageWrapper>
   )
 }
 
-export default Login
+export default inject('appStore', 'accountStore')(observer(Login))

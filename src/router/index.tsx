@@ -1,7 +1,11 @@
-import Login from '@/pages/Login/index'
-import Register from '@/pages/Register/index'
-import Detail from '@/pages/detail'
+import Login from '@/pages/login'
+import Register from '@/pages/register'
+import Index from '@/pages/index'
 import Home from '@/pages/home/index'
+
+import Detail from '@/pages/detail'
+import Table from '@/pages/table'
+
 import { UserOutlined } from '@ant-design/icons'
 
 import AccountLayout from '@/layouts/Account/index'
@@ -10,11 +14,13 @@ import { Redirect } from 'react-router-dom'
 
 export const routes: RouteConfig[] = [
   {
-    path: '/home',
-    component: Home,
+    path: '/table',
+    component: Table,
     meta: {
-      icon: UserOutlined,
-      title: 'Home',
+      hidden: true,
+      title: 'Table',
+      activeMenu: '/table',
+      auth: true,
     },
   },
   {
@@ -24,37 +30,60 @@ export const routes: RouteConfig[] = [
       hidden: true,
       title: 'Detail',
       activeMenu: '/home',
+      auth: true,
     },
   },
   {
     path: '/work',
-    component: Home,
+    component: Home as any,
     meta: {
       icon: UserOutlined,
       title: 'Work',
+      auth: true,
     },
+  },
+  {
+    path: '/',
+    component: Home as any,
+    meta: {
+      auth: true,
+      title: 'Home',
+    },
+    routes: [
+      {
+        path: '/',
+        component: Index as any,
+        name: '',
+        meta: {
+          auth: true,
+        },
+      },
+    ],
   },
   {
     path: '/account',
     component: AccountLayout,
     name: 'Account',
-    auth: false,
+    meta: {
+      auth: false,
+    },
     routes: [
       {
         path: '/account/login',
         exact: true,
-        component: Login,
-        auth: true,
+        component: Login as any,
+        meta: { auth: true },
       },
       {
         path: '/account/register',
         exact: true,
-        component: Register,
-        auth: true,
+        component: Register as any,
+        meta: { auth: true },
       },
       {
         path: '*',
         render: () => <Redirect to="/account/login"></Redirect>,
+        meta: { auth: true },
       },
     ],
   },

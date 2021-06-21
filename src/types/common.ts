@@ -17,3 +17,7 @@ export interface SelectOption<T = string | number> {
     label: string
     value: T
 }
+
+export interface Dictionay<T = any> {
+  [key: string]: T
+}

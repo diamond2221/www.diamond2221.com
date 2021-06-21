@@ -318,7 +318,7 @@ export function copy(text: string) {
 }
 
 export function toComment(comment: string = ''): string {
-    return comment.replace(/(\@.+)\s{1}/g, (match, $1: string) => {
+    return comment.replace(/(@.+)\s{1}/g, (match, $1: string) => {
         let idx = $1.indexOf(' ');
         let userName = $1;
         let rightTxt = '';

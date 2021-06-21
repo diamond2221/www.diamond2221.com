@@ -1,7 +1,9 @@
 import accountStore from './account'
+import appStore from './app'
 
 const stores = {
-    accountStore
+  accountStore,
+  appStore
 }
 
 export default stores
